@@ -36,16 +36,18 @@ public class UserRegistrationValidation {
 		for (String fieldname : validatefields) {
 			message = message+","+fieldname;
 		}
-		
-		return new CustomExceptionforRegistartion(message, "Enter the request fields properly", null);
+		if (message != null)
+			return new CustomExceptionforRegistartion(message, "Enter the request fields properly", null);
+		else
+			return null;
 	}
 	
 	public List<String> ValidateFields(Registrationdto dto){
 		List<String> validatedFieldStatus = new LinkedList();
 		
-		if(dto.getAge() != 0 && dto.getAge()<=70 && dto.getAge()>=5)
+		if(dto.getAge() == 0 && dto.getAge()>=70 && dto.getAge()<=5)
 			validatedFieldStatus.add(ValidationResponseMessage.InValidAge.toString());
-		if(dto.getEmail().contains("@gmail.com"))
+		if(!dto.getEmail().contains("@gmail.com"))
 			validatedFieldStatus.add(ValidationResponseMessage.Invalidmail.toString());
 		
 		return validatedFieldStatus;

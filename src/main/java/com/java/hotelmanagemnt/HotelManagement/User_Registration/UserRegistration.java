@@ -1,46 +1,40 @@
 package com.java.hotelmanagemnt.HotelManagement.User_Registration;
 
-import jakarta.annotation.Generated;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
-@Entity
+import org.springframework.data.annotation.Id;
+import org.springframework.data.couchbase.core.index.CompositeQueryIndex;
+import org.springframework.data.couchbase.core.index.QueryIndexed;
+import org.springframework.data.couchbase.core.mapping.Document;
+import org.springframework.data.couchbase.core.mapping.Field;
+
+
+@Document
+@CompositeQueryIndex(fields = {"id","firstname"})
 public class UserRegistration {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@QueryIndexed
 	private Long id;
 	
-	@Column(name = "First Name")
+	@Field
+	@QueryIndexed
 	private String firstname;
-	
-	@Column(name = "Last Name")
+	@Field
 	private String lastname;
 	
-	@Column(name = "E-mail")
+	@Field
 	private String email;
 	
-	@Column(name = "Phone Number")
+	@Field
 	private Long phonenumber;
 	
-	@Column(name = "Adhar Number")
+	@Field
 	private Long adharnumber;
 	
-	@Column(name = "Age")
+	@Field
 	private int age;
 	
-	@Column(name = "Password")
+	@Field
 	private String password;
 
 	public Long getId() {

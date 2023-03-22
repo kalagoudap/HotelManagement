@@ -1,7 +1,6 @@
 package com.java.hotelmanagemnt.HotelManagement.RegestrationController;
 
 import java.util.List;
-import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,9 +10,11 @@ import com.java.hotelmanagemnt.HotelManagement.Registrationdto.Registrationdto;
 import com.java.hotelmanagemnt.HotelManagement.User_Registration.UserRegistration;
 import com.java.hotelmanagemnt.HotelManagement.iRegistrationServices.iRegistrationService;
 import com.java.hotelmanagemnt.HotelManagement.iRegistrationValidation.UserRegistrationValidation;
-import com.java.hotelmanagemnt.HotelManagement.iRgestrationController.iRegistrationController;
+import org.springframework.web.bind.annotation.*;
 
-public class RegistrationController implements iRegistrationController {
+@RequestMapping("/registration")
+@RestController
+public class RegistrationController{
 	
 	@Autowired
 	iRegistrationService iRegistrationService;
@@ -21,8 +22,8 @@ public class RegistrationController implements iRegistrationController {
 	@Autowired
 	UserRegistrationValidation userRegistrationValidation;
 
-	@Override
-	public ResponseEntity<UserRegistration> getUserRegisetred(Long id) {
+	@GetMapping("/user/get/{id}")
+	public ResponseEntity<UserRegistration> getUserRegisetred(@PathVariable Long id) {
 		CustomExceptionforRegistartion customExceptionforRegistartion = 
 									userRegistrationValidation.uservalidationofID(id);
 		
@@ -31,9 +32,8 @@ public class RegistrationController implements iRegistrationController {
 		
 		return iRegistrationService.getUserRegistration(id);
 	}
-
-	@Override
-	public ResponseEntity<UserRegistration> saveUserRegister(Registrationdto dto) {
+	@PostMapping("/user/save")
+	public ResponseEntity<UserRegistration> saveUserRegister(@RequestBody Registrationdto dto) {
 		CustomExceptionforRegistartion customExceptionforRegistartion = 
 										userRegistrationValidation.userValidationrequestObject(dto);
 		
@@ -42,9 +42,8 @@ public class RegistrationController implements iRegistrationController {
 		
 		return iRegistrationService.saveUserRegistrationdata(dto);
 	}
-
-	@Override
-	public ResponseEntity<UserRegistration> updateUserRegistration(Registrationdto registrationdto) {
+	@PutMapping("/user/update")
+	public ResponseEntity<UserRegistration> updateUserRegistration(@RequestBody Registrationdto registrationdto) {
 		CustomExceptionforRegistartion customExceptionforRegistartion = 
 				userRegistrationValidation.userValidationrequestObject(registrationdto);
 		
@@ -53,9 +52,8 @@ public class RegistrationController implements iRegistrationController {
 		
 		return iRegistrationService.updateUserRegistrationdata(registrationdto);
 	}
-
-	@Override
-	public String deleteUserRegistration(Long id) {
+	@DeleteMapping("/user/delete")
+	public String deleteUserRegistration(@PathVariable Long id) {
 		CustomExceptionforRegistartion customExceptionforRegistartion = 
 				userRegistrationValidation.uservalidationofID(id);
 		
@@ -65,7 +63,7 @@ public class RegistrationController implements iRegistrationController {
 		return iRegistrationService.deletUserregistration(id);
 	}
 
-	@Override
+	@GetMapping("/Users/getall")
 	public List<UserRegistration> getAllUserRegistration() {
 		
 		return iRegistrationService.getAllUserRegistration();

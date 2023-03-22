@@ -30,7 +30,8 @@ public class UserRegistrationService implements iRegistrationService {
 	@Override
 	public ResponseEntity<UserRegistration> saveUserRegistrationdata(Registrationdto dto) {
 		UserRegistration userRegistration = new UserRegistration();
-		
+
+		userRegistration.setId(dto.getId());
 		userRegistration.setFirstname(dto.getFirstname());
 		userRegistration.setLastname(dto.getLastname());
 		userRegistration.setEmail(dto.getEmail());
